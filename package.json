@@ -1,0 +1,15 @@
+{
+  "name": "datasette-chalice",
+  "version": "1.0.0",
+  "description": "datasette-chalice js deps",
+  "dependencies": {
+    "@tailwindcss/ui": "^0.4.0",
+    "tailwindcss": "^1.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "css": "tailwind build datasette-chalice/assets/tailwind.css -o datasette-chalice/vendor/style.css"
+  },
+  "author": "anthony@mcclosky.dev",
+  "private": true
+}

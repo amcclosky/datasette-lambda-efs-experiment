@@ -1,0 +1,20 @@
+version: '3.6'
+
+services:
+  workspace:
+    build:
+      context: .
+    image: datasette-chalice-dev
+    command: sleep infinity
+    volumes:
+        - ./dotfiles:/root/.dotfiles
+        - ./dotfiles/.bashrc:/root/.bashrc
+        - ./dotfiles/.bash_profile:/root/.bash_profile
+        - .:/project
+        - ~/.aws:/root/.aws
+        - virtualenvs:/virtualenvs
+        - node_modules:/project/node_modules
+
+volumes:
+  virtualenvs:
+  node_modules:

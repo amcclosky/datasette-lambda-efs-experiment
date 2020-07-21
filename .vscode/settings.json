@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.html": "jinja-html"
+    },
+    "python.pythonPath": "/virtualenvs/datasette-chalice-6gE1vKXj-py3.8/bin/python"
+}

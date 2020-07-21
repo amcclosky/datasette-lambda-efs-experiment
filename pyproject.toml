@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "datasette-chalice"
+version = "0.1.0"
+description = "data notebook experiment"
+authors = ["amcclosky <anthony@mcclosky.dev>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+chalice = {version = "^1.15.1"}
+invoke = "^1.4.1"
+ipython = "^7.16.1"
+boto3 = "^1.14.24"
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

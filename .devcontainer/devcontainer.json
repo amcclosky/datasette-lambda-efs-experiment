@@ -1,0 +1,39 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json
+{
+	"name": "datasette-chalice",
+
+	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
+	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
+	"dockerComposeFile": [
+		"../docker-compose.yml",
+		"docker-compose.yml"
+	],
+
+	// The 'service' property is the name of the service for the container that VS Code should
+	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+	"service": "workspace",
+
+	"workspaceFolder": "/project",
+	"settings": {
+		"terminal.integrated.shell.linux": "bash",
+		"python.terminal.activateEnvironment": false,
+		"python.venvFolders": ["/virtualenvs"]
+	},
+	"remoteEnv": {
+		"PROJECT_NAME": "datasette-chalice"
+	},
+
+	"extensions": [
+		"tombonnike.vscode-status-bar-format-toggle",
+		"esbenp.prettier-vscode",
+		"ms-python.vscode-pylance",
+		"ms-python.python",
+		"samuelcolvin.jinjahtml",
+		"bierner.github-markdown-preview"
+	]
+
+	// "forwardPorts": [],
+
+	// start specific services in the Docker Compose config.
+	// "runServices": [],
+}
