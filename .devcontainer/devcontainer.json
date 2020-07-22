@@ -29,7 +29,8 @@
 		"ms-python.vscode-pylance",
 		"ms-python.python",
 		"samuelcolvin.jinjahtml",
-		"bierner.github-markdown-preview"
+		"bierner.github-markdown-preview",
+		"amazonwebservices.aws-toolkit-vscode"
 	]
 
 	// "forwardPorts": [],

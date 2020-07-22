@@ -2,10 +2,10 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "datasette-test"
+stack_name = "datasette-lambda-test"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-b0wlb2reqeoz"
-s3_prefix = "datasette-test"
+s3_prefix = "datasette-lambda-test"
 region = "us-east-1"
-confirm_changeset = true
+confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
 

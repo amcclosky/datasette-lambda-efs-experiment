@@ -5,20 +5,21 @@ Description: >
 
   Sample SAM Template for datasette-test
 
-Globals:
-  Function:
-    Timeout: 3
+Parameters:
+  StageName:
+    Type: String
+    Default: Prod
 
 Resources:
-  EfsLambdaVpc:
+  DatasetteVpc:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: "10.0.0.0/16"
-  EfsLambdaSecurityGroup:
+  DatasetteSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: "EFS + Lambda on SAM Security Group"
-      VpcId: !Ref EfsLambdaVpc
+      GroupDescription: "datasette-lambda Security Group"
+      VpcId: !Ref DatasetteVpc
       SecurityGroupEgress:
         - CidrIp: "0.0.0.0/0"
           FromPort: 0
@@ -29,17 +30,17 @@ Resources:
           FromPort: 0
           ToPort: 65535
           IpProtocol: tcp
-  EfsLambdaSubnetA:
+  DatasetteSubnetA:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref EfsLambdaVpc
+      VpcId: !Ref DatasetteVpc
       AvailabilityZone: !Select [ 0, !GetAZs '' ]
       MapPublicIpOnLaunch: false
       CidrBlock: "10.0.0.0/24"
-  EfsLambdaSubnetB:
+  DatasetteSubnetB:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref EfsLambdaVpc
+      VpcId: !Ref DatasetteVpc
       AvailabilityZone: !Select [ 1, !GetAZs '' ]
       MapPublicIpOnLaunch: false
       CidrBlock: "10.0.1.0/24"
@@ -51,16 +52,16 @@ Resources:
     Type: AWS::EFS::MountTarget
     Properties:
       FileSystemId: !Ref EfsFileSystem
-      SubnetId: !Ref EfsLambdaSubnetA
+      SubnetId: !Ref DatasetteSubnetA
       SecurityGroups:
-        - !Ref EfsLambdaSecurityGroup
+        - !Ref DatasetteSecurityGroup
   MountTargetB:
     Type: AWS::EFS::MountTarget
     Properties:
       FileSystemId: !Ref EfsFileSystem
-      SubnetId: !Ref EfsLambdaSubnetB
+      SubnetId: !Ref DatasetteSubnetB
       SecurityGroups:
-        - !Ref EfsLambdaSecurityGroup
+        - !Ref DatasetteSecurityGroup
   AccessPoint:
     Type: AWS::EFS::AccessPoint
     Properties:
@@ -74,7 +75,7 @@ Resources:
           OwnerGid: "1000"
           OwnerUid: "1000"
           Permissions: "755"
-  DatasetteLambdaFunction:
+  DatasetteFunction:
     Type: AWS::Serverless::Function
     DependsOn:
       - MountTargetA
@@ -89,21 +90,41 @@ Resources:
             AccessPoint: !Ref AccessPoint
       VpcConfig:
         SecurityGroupIds:
-          - !Ref EfsLambdaSecurityGroup
+          - !Ref DatasetteSecurityGroup
         SubnetIds:
-          - !Ref EfsLambdaSubnetA
-          - !Ref EfsLambdaSubnetB
+          - !Ref DatasetteSubnetA
+          - !Ref DatasetteSubnetB
       FileSystemConfigs:
         - Arn: !GetAtt AccessPoint.Arn
           LocalMountPath: /mnt/lambda
       Events:
-        Datasette:
+        DatasetteGet:
           Type: HttpApi
           Properties:
+            ApiId: !Ref DatasetteHttpApi
             Path: /{proxy+}
-            Method: '*'
+            Method: get
+        DatasettePost:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref DatasetteHttpApi
+            Path: /{proxy+}
+            Method: post
+
+  DatasetteHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: !Ref StageName
+      StageVariables:
+        StageVar: Value
+      FailOnWarnings: True
 
 Outputs:
-  Datasette:
-    Description: "API Gateway endpoint URL for Datasette Proxy Function"
-    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  DatasetteHttpApiUrl:
+    Description: URL of Datasette
+    Value:
+      Fn::Sub: 'https://${DatasetteHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/${StageName}/'
+  HttpApiId:
+    Description: Api id of HttpApi
+    Value:
+      Ref: DatasetteHttpApi
