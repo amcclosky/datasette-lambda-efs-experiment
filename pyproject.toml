@@ -7,12 +7,15 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
+datasette = "^0.45"
+mangum = "^0.9.2"
 
 [tool.poetry.dev-dependencies]
 chalice = {version = "^1.15.1"}
 invoke = "^1.4.1"
 ipython = "^7.16.1"
 boto3 = "^1.14.24"
+pytest = "^5.4.3"
 
 [tool.black]
 line-length = 88

@@ -1,9 +1,17 @@
 ## To Do
 
-- pull script from gist in url param
-- run script in async lambda
-- notify and redirect via websocket
-- display list page of generated reports
-  - link to gist and to report
+- adapt add the mangum adapter
+- test datasette locally with sam-cli
 
-[Example Result](http://ap-datasette-chalice-dev.s3-website-us-east-1.amazonaws.com/reports/1595315933/)
+- update tasks.py
+  - build and deploy datasette layer
+  - deploy datasette instance
+
+- remove js stuff
+- update Dockerfile for new sam cli version
+- deploy a test dataset
+
+## Ideas
+- investigate custom domain support
+- does chalice support make sense?
+- support auth oob?
