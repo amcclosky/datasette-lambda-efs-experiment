@@ -1,8 +1,5 @@
 ## To Do
 
-- adapt add the mangum adapter
-- test datasette locally with sam-cli
-
 - update tasks.py
   - build and deploy datasette layer
   - deploy datasette instance

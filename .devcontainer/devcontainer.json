@@ -1,6 +1,6 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json
 {
-	"name": "datasette-chalice",
+	"name": "datasette-test",
 
 	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
 	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
@@ -20,7 +20,7 @@
 		"python.venvFolders": ["/virtualenvs"]
 	},
 	"remoteEnv": {
-		"PROJECT_NAME": "datasette-chalice"
+		"PROJECT_NAME": "datasette-test"
 	},
 
 	"extensions": [
