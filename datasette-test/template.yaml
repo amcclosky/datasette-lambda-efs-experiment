@@ -81,6 +81,7 @@ Resources:
       - MountTargetA
       - MountTargetB
     Properties:
+      MemorySize: 1024
       CodeUri: datasette_lambda/
       Handler: app.lambda_handler
       Runtime: python3.8
@@ -115,9 +116,15 @@ Resources:
     Type: AWS::Serverless::HttpApi
     Properties:
       StageName: !Ref StageName
+      AccessLogSettings:
+        DestinationArn: !GetAtt AccessLogs.Arn
+        Format: $context.requestId
       StageVariables:
         StageVar: Value
       FailOnWarnings: True
+
+  AccessLogs:
+    Type: AWS::Logs::LogGroup
 
 Outputs:
   DatasetteHttpApiUrl:

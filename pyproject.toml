@@ -16,6 +16,7 @@ invoke = "^1.4.1"
 ipython = "^7.16.1"
 boto3 = "^1.14.24"
 pytest = "^5.4.3"
+csvs-to-sqlite = "^1.0"
 
 [tool.black]
 line-length = 88
